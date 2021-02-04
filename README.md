@@ -1,5 +1,5 @@
 # typecho_Oauth
-typecho免申请第三方应用基础第三方登录插件
+typecho免申请第三方应用集成多种第三方登录插件
 
 ![演示图](https://www.gmit.vip/usr/uploads/2020/12/783730042.png)
 
