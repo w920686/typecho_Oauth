@@ -52,3 +52,18 @@ https://www.gmit.vip/
         -webkit-box-shadow: 0 1px 1px rgb(90 90 90 / 10%);
         box-shadow: 0 1px 1px rgb(90 90 90 / 10%);
     }
+
+# 支持站点
+1. 钉钉
+2. QQ
+3. 百度
+4. gitee码云
+5. github
+6. 微博
+会陆续新增其他站点的支持
+
+# 版本
+v2.0 
+1. 取消登录账号绑定
+2. 新增加后台用户绑定功能开启插件即可看见
+3. 优化已知bug
