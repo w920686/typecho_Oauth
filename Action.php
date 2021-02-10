@@ -187,20 +187,12 @@ class GmOauth_Action extends Typecho_Widget implements Widget_Interface_Do
           <div class="eyeball"></div>
         </div>
         <div class="mouth"></div>
-      </div><h2>授权成功，正在加载…</h2>
+      </div><h2>登录成功，正在加载…</h2>
     </div>
     <script>  
         setTimeout(function(){
-            top.location = "'.$this->cbref().'";
-        }, 1500);
-        setTimeout(function(){
-            if(window.opener.location.href){
-                window.opener.location.reload(true);self.close();
-            }else{
-                window.location.replace="'.$this->cbref().'";
-            }
+            window.location.href="'.$this->cbref().'";
         }, 1000);
-        setTimeout(function(){window.opener=null;window.close();}, 50000);
     </script> 
   </body>
 </html>';
