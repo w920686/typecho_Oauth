@@ -28,6 +28,8 @@ include 'menu.php';
     $Dingtalk = $db->fetchAll($db->select('app','uid','openid')->from('table.gm_oauth')->where('app = ?','Dingtalk')->where('uid = ?',$user->uid));
     $Gitee = $db->fetchAll($db->select('app','uid','openid')->from('table.gm_oauth')->where('app = ?','Gitee')->where('uid = ?',$user->uid));
     $Github = $db->fetchAll($db->select('app','uid','openid')->from('table.gm_oauth')->where('app = ?','Github')->where('uid = ?',$user->uid));
+    $Huawei = $db->fetchAll($db->select('app','uid','openid')->from('table.gm_oauth')->where('app = ?','Huawei')->where('uid = ?',$user->uid));
+    $Gitlab = $db->fetchAll($db->select('app','uid','openid')->from('table.gm_oauth')->where('app = ?','Gitlab')->where('uid = ?',$user->uid));
     if($_GET['del']){
         if($db->query($db->delete('table.gm_oauth')->where('uid = ?',$user->uid)->where('app = ?',$_GET['del']))){
             exit('<script>alert("解绑成功");window.location.href="'.$options->adminUrl.'extending.php?panel=GmOauth/console.php";</script>');
@@ -86,6 +88,22 @@ include 'menu.php';
         echo '已绑定 （<a href="'.$options->adminUrl.'extending.php?panel=GmOauth/console.php&del=Github">解除GitHub</a>）';
     }else{
         echo '未绑定（<a href="'.$options->adminUrl.'extending.php?panel=GmOauth/console.php&add=Github">绑定GitHub</a>）';
+    }
+    
+    echo "<br/>";
+    echo '<svg t="1613135463151" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2208" width="20" height="20"><path d="M436.8 136s-81.6-3.2-136 62.4-12.8 169.6 12.8 224c25.6 52.8 153.6 260.8 160 267.2 6.4 3.2 9.6 3.2 9.6 0s16-302.4 3.2-377.6c-9.6-75.2-43.2-166.4-49.6-176zM152 273.6c-9.6 0-75.2 68.8-81.6 132.8-6.4 65.6 22.4 110.4 100.8 160 78.4 56 264 156.8 270.4 152 3.2-9.6-72-145.6-136-243.2-60.8-97.6-144-201.6-153.6-201.6z m25.6 604.8c56 25.6 145.6-32 169.6-48 22.4-19.2 65.6-51.2 65.6-51.2l-320 11.2s28.8 64 84.8 88z m9.6-257.6C131.2 592 11.2 526.4 8 526.4S-14.4 608 24 672s110.4 81.6 142.4 84.8c38.4 6.4 256 3.2 256 0-8-3.2-177.6-107.2-235.2-136zM720 198.4c-52.8-65.6-136-62.4-136-62.4-6.4 9.6-41.6 100.8-51.2 176-12.8 72 3.2 371.2 3.2 377.6 0 3.2 6.4 6.4 9.6 0 6.4-3.2 136-214.4 160-267.2 27.2-54.4 64-155.2 14.4-224z m296 328c-3.2 0-123.2 65.6-179.2 94.4-56 28.8-230.4 132.8-230.4 136 0 3.2 217.6 6.4 256 0 32-6.4 104-25.6 142.4-84.8 33.6-64 14.4-145.6 11.2-145.6zM672 832c25.6 16 113.6 72 169.6 48 56-25.6 88-88 88-88L608 782.4c1.6-1.6 43.2 30.4 64 49.6z m278.4-422.4c-6.4-65.6-72-132.8-81.6-132.8-9.6 0-91.2 104-152 201.6-62.4 97.6-139.2 233.6-136 243.2 3.2 9.6 192-94.4 270.4-152 76.8-52.8 105.6-97.6 99.2-160z" fill="#d81e06" p-id="2209"></path></svg>';
+    if($Huawei){
+        echo '已绑定 （<a href="'.$options->adminUrl.'extending.php?panel=GmOauth/console.php&del=Huawei">解除GitHub</a>）';
+    }else{
+        echo '未绑定（<a href="'.$options->adminUrl.'extending.php?panel=GmOauth/console.php&add=Huawei">绑定GitHub</a>）';
+    }
+    
+    echo "<br/>";
+    echo '<svg t="1613135487733" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3044" width="20" height="20"><path d="M932.317184 567.76704L885.10464 422.46144l-93.57312-287.997952c-4.8128-14.81728-25.776128-14.81728-30.590976 0L667.36128 422.459392H356.62848L263.051264 134.46144c-4.8128-14.81728-25.776128-14.81728-30.593024 0l-93.57312 287.997952-47.210496 145.309696a32.165888 32.165888 0 0 0 11.68384 35.96288l408.6272 296.890368L920.61696 603.734016c11.272192-8.192 15.990784-22.71232 11.68384-35.964928" fill="#FC6D26" p-id="3045"></path><path d="M512.002048 900.62848l155.365376-478.171136H356.634624z" fill="#E24329" p-id="3046"></path><path d="M512.004096 900.62848L356.63872 422.47168H138.901504z" fill="#FC6D26" p-id="3047"></path><path d="M138.891264 422.465536l-47.214592 145.309696a32.16384 32.16384 0 0 0 11.685888 35.96288L511.991808 900.62848z" fill="#FCA326" p-id="3048"></path><path d="M138.893312 422.459392h217.737216L263.053312 134.46144c-4.8128-14.819328-25.778176-14.819328-30.590976 0z" fill="#E24329" p-id="3049"></path><path d="M512.002048 900.62848l155.365376-478.154752H885.10464z" fill="#FC6D26" p-id="3050"></path><path d="M885.11488 422.465536l47.214592 145.309696a32.16384 32.16384 0 0 1-11.685888 35.96288L512.014336 900.62848z" fill="#FCA326" p-id="3051"></path><path d="M885.096448 422.459392H667.36128l93.577216-287.997952c4.814848-14.819328 25.778176-14.819328 30.590976 0z" fill="#E24329" p-id="3052"></path></svg>';
+    if($Gitlab){
+        echo '已绑定 （<a href="'.$options->adminUrl.'extending.php?panel=GmOauth/console.php&del=Gitlab">解除GitHub</a>）';
+    }else{
+        echo '未绑定（<a href="'.$options->adminUrl.'extending.php?panel=GmOauth/console.php&add=Gitlab">绑定GitHub</a>）';
     }
 ?>
 </div>
