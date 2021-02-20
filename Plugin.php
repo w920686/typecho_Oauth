@@ -5,7 +5,7 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit;
  * 
  * @package GmOauth
  * @author Gm
- * @version 2.0
+ * @version 2.0.2
  * @update: 2021-1-31
  * @link //www.gmit.vip
  */
