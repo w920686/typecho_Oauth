@@ -187,7 +187,7 @@ class GmOauth_Action extends Typecho_Widget implements Widget_Interface_Do
           <div class="eyeball"></div>
         </div>
         <div class="mouth"></div>
-      </div><h2>登录成功，正在加载…</h2>
+      </div><h2>授权成功，正在加载…</h2>
     </div>
     <script>  
         setTimeout(function(){
