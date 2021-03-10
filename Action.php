@@ -7,8 +7,14 @@ class GmOauth_Action extends Typecho_Widget implements Widget_Interface_Do
     }
     public function GmOauth(){
         $this->ref();
-        if($_GET['site']){
-            $this->response->redirect('https://auth.gmit.vip/'.$_GET['site'].'?redirectUrl=//'.$_SERVER['HTTP_HOST'].'/GmOauth/Callback');
+        $site = $_GET['site'];
+        if($site){
+            $plugin = Typecho_Widget::widget('Widget_Options')->plugin('GmOauth');
+            if($plugin->$site){
+                $this->response->redirect('https://auth.gmit.vip/'.$_GET['site'].'?redirectUrl=//'.$_SERVER['HTTP_HOST'].'/GmOauth/Callback');
+            }else{
+                throw new Typecho_Exception(_t('未开通此第三方登陆'));
+            }
         }
     }
     
@@ -169,6 +175,7 @@ class GmOauth_Action extends Typecho_Widget implements Widget_Interface_Do
     }
     
     protected function Ok(){
+        $this->response->redirect($this->cbref());
         echo '
 <!DOCTYPE html>
 <html>
