@@ -6,7 +6,7 @@ include 'config.php';
  * 
  * @package GmOauth
  * @author Gm
- * @version 2.1
+ * @version 2.1.1
  * @update: 2021-1-31
  * @link //www.gmit.vip
  */
@@ -29,17 +29,17 @@ class GmOauth_Plugin implements Typecho_Plugin_Interface
         try {
             $db = Typecho_Db::get();
             $prefix = $db->getPrefix();
-            $sql = "CREATE TABLE IF NOT EXISTS `typecho_gm_oauth` (
-  `id` int(255) NOT NULL,
-  `app` text NOT NULL,
-  `uid` int(255) NOT NULL,
-  `openid` text NOT NULL,
-  `time` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-ALTER TABLE `typecho_gm_oauth`
-  ADD PRIMARY KEY (`id`);
-ALTER TABLE `typecho_gm_oauth`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;";
+            $sql = "CREATE TABLE IF NOT EXISTS `{$prefix}gm_oauth` (
+              `id` int(255) NOT NULL,
+              `app` text NOT NULL,
+              `uid` int(255) NOT NULL,
+              `openid` text NOT NULL,
+              `time` text NOT NULL
+            ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+            ALTER TABLE `{$prefix}gm_oauth`
+              ADD PRIMARY KEY (`id`);
+            ALTER TABLE `{$prefix}gm_oauth`
+              MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;";
             $db->query($sql);
             return '插件安装成功!数据库安装成功';
         } catch (Typecho_Db_Exception $e) {
