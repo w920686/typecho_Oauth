@@ -13,8 +13,7 @@ include 'config.php';
 <?php
     $db = Typecho_Db::get();
     Typecho_Widget::widget('Widget_User')->to($user);
-    $config = new GmOauth_Site;
-    $site = $config->site();
+    $site = conf::site();
     $plugin = Typecho_Widget::widget('Widget_Options')->plugin('GmOauth');
     $arr = [];
     for ($i = 0; $i < count($site); $i++) {

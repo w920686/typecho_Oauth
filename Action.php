@@ -1,5 +1,4 @@
 <?php
-session_start(); 
 class GmOauth_Action extends Typecho_Widget implements Widget_Interface_Do
 {
     public function action(){
@@ -11,7 +10,7 @@ class GmOauth_Action extends Typecho_Widget implements Widget_Interface_Do
         if($site){
             $plugin = Typecho_Widget::widget('Widget_Options')->plugin('GmOauth');
             if($plugin->$site){
-                $this->response->redirect('https://auth.gmit.vip/'.$_GET['site'].'?redirectUrl=//'.$_SERVER['HTTP_HOST'].'/GmOauth/Callback');
+                $this->response->redirect('https://auth.gmit.vip/'.$_GET['site'].'?redirectUrl='.Typecho_Common::url('GmOauth/Callback', Helper::options()->index));
             }else{
                 throw new Typecho_Exception(_t('未开通此第三方登陆'));
             }
@@ -159,7 +158,6 @@ class GmOauth_Action extends Typecho_Widget implements Widget_Interface_Do
             //throw new Typecho_Exception(_t('来源验证失败！非法请求'));
             $_SESSION['ref'] = "//".$_SERVER['HTTP_HOST']; 
         }else{
-            session_start();
             $_SESSION['ref'] = $_SERVER['HTTP_REFERER']; 
         }
     }

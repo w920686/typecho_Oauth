@@ -6,8 +6,8 @@ include 'config.php';
  * 
  * @package GmOauth
  * @author Gm
- * @version 2.1.1
- * @update: 2021-1-31
+ * @version 2.1.2
+ * @update: 2021-3-17
  * @link //www.gmit.vip
  */
 class GmOauth_Plugin implements Typecho_Plugin_Interface
@@ -74,8 +74,7 @@ class GmOauth_Plugin implements Typecho_Plugin_Interface
      */
     public static function config(Typecho_Widget_Helper_Form $form)
     {
-        $config = new GmOauth_Site;
-        $site = $config->site();
+        $site = conf::site();
         for ($i = 0; $i < count($site); $i++) {
             $radio = new Typecho_Widget_Helper_Form_Element_Radio($site[$i]['site'], array('1' => _t('开启'), '0' => _t('关闭')), '1', _t($site[$i]['name']));
             $form->addInput($radio);
@@ -110,8 +109,7 @@ class GmOauth_Plugin implements Typecho_Plugin_Interface
     
     public static function GmOauth()
     {
-        $config = new GmOauth_Site;
-        $site = $config->site();
+        $site = conf::site();
         $plugin = Typecho_Widget::widget('Widget_Options')->plugin('GmOauth');
         $html = '';
         for ($i = 0; $i < count($site); $i++) {
