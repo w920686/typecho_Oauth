@@ -6,7 +6,7 @@ include 'config.php';
  * 
  * @package GmOauth
  * @author Gm
- * @version 2.1.2
+ * @version 2.1.3
  * @update: 2021-3-17
  * @link //www.gmit.vip
  */
