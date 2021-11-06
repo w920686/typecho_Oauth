@@ -10,7 +10,7 @@ class GmOauth_Action extends Typecho_Widget implements Widget_Interface_Do
         if($site){
             $plugin = Typecho_Widget::widget('Widget_Options')->plugin('GmOauth');
             if($plugin->$site){
-                $this->response->redirect('https://auth.gmit.vip/'.$_GET['site'].'?redirectUrl='.Typecho_Common::url('GmOauth/Callback', Helper::options()->index));
+                $this->response->redirect('https://sso.gmit.vip/'.$_GET['site'].'/redirect?redirect_url='.Typecho_Common::url('GmOauth/Callback', Helper::options()->index));
             }else{
                 throw new Typecho_Exception(_t('未开通此第三方登陆'));
             }
@@ -24,7 +24,7 @@ class GmOauth_Action extends Typecho_Widget implements Widget_Interface_Do
             Typecho_Widget::widget('Widget_User')->to($user);
             Typecho_Widget::widget('Widget_Options')->to($options);
             $curl = curl_init();
-        	curl_setopt($curl, CURLOPT_URL, 'https://auth.gmit.vip/api/info');
+        	curl_setopt($curl, CURLOPT_URL, 'https://sso.gmit.vip/api');
         	curl_setopt($curl, CURLOPT_HEADER, 0);
         	curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         	curl_setopt($curl, CURLOPT_POST, 1);
@@ -32,7 +32,8 @@ class GmOauth_Action extends Typecho_Widget implements Widget_Interface_Do
         	curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
         	curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
         	curl_setopt($curl, CURLOPT_POSTFIELDS, [
-        	    'code' => $code
+        	    'code' => $code,
+        	    'action' => 'info'
         	]);
         	$info = curl_exec($curl);
         	curl_close($curl);
@@ -69,7 +70,7 @@ class GmOauth_Action extends Typecho_Widget implements Widget_Interface_Do
         $code = @$_GET['code'];
         if($code){
             $curl = curl_init();
-        	curl_setopt($curl, CURLOPT_URL, 'https://auth.gmit.vip/api/info');
+        	curl_setopt($curl, CURLOPT_URL, 'https://sso.gmit.vip/api');
         	curl_setopt($curl, CURLOPT_HEADER, 0);
         	curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         	curl_setopt($curl, CURLOPT_POST, 1);
@@ -78,6 +79,7 @@ class GmOauth_Action extends Typecho_Widget implements Widget_Interface_Do
         	curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
         	curl_setopt($curl, CURLOPT_POSTFIELDS, [
         	    'code' => $code,
+        	    'action' => 'info'
         	]);
         	$info = curl_exec($curl);
         	curl_close($curl);
@@ -93,7 +95,7 @@ class GmOauth_Action extends Typecho_Widget implements Widget_Interface_Do
                     $UserName = $this->UserName();
                     $data = array(
                         'name' => $UserName,
-                        'screenName' => $info['data']['name'],
+                        'screenName' => $info['data']['nickname'],
                         'password' => $hasher->HashPassword($UserName),
                         'created' => time(),
                         'group' => 'subscriber'
@@ -121,7 +123,7 @@ class GmOauth_Action extends Typecho_Widget implements Widget_Interface_Do
                     }
                 }
         	}else{
-        	    throw new Typecho_Exception(_t($data['msg']));
+        	    throw new Typecho_Exception(_t($info['msg']));
                 exit();
         	}
         }else {
@@ -173,7 +175,7 @@ class GmOauth_Action extends Typecho_Widget implements Widget_Interface_Do
     }
     
     protected function Ok(){
-        $this->response->redirect($this->cbref());
+        //$this->response->redirect($this->cbref());
         echo '
 <!DOCTYPE html>
 <html>
@@ -181,7 +183,7 @@ class GmOauth_Action extends Typecho_Widget implements Widget_Interface_Do
     <meta name="robots" content="noindex, nofollow">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>登陆成功，请您稍候…</title>
+    <title>加载中，请稍候…</title>
     <link rel="shortcut icon" href="/favicon.ico">
     <style type="text/css">@charset "UTF-8";html,body{margin:0;padding:0;width:100%;height:100%;background-color:#DB4D6D;display:flex;justify-content:center;align-items:center;font-family:"微軟正黑體";}.monster{width:110px;height:110px;background-color:#E55A54;border-radius:20px;position:relative;display:flex;justify-content:center;align-items:center;flex-direction:column;cursor:pointer;margin:10px;box-shadow:0px 10px 20px rgba(0,0,0,0.2);position:relative;animation:jumping 0.8s infinite alternate;}.monster .eye{width:40%;height:40%;border-radius:50%;background-color:#fff;display:flex;justify-content:center;align-items:center;}.monster .eyeball{width:50%;height:50%;border-radius:50%;background-color:#0C4475;}.monster .mouth{width:32%;height:12px;border-radius:12px;background-color:white;margin-top:15%;}.monster:before,.monster:after{content:"";display:block;width:20%;height:10px;position:absolute;left:50%;top:-10px;background-color:#fff;border-radius:10px;}.monster:before{transform:translateX(-70%) rotate(45deg);}.monster:after{transform:translateX(-30%) rotate(-45deg);}.monster,.monster *{transition:0.5s;}@keyframes jumping{50%{top:0;box-shadow:0px 10px 20px rgba(0,0,0,0.2);}100%{top:-50px;box-shadow:0px 120px 50px rgba(0,0,0,0.2);}}@keyframes eyemove{0%,10%{transform:translate(50%);}90%,100%{transform:translate(-50%);}}.monster .eyeball{animation:eyemove 1.6s infinite alternate;}h2{color:white;font-size:20px;margin:20px 0;}.pageLoading{position:fixed;width:100%;height:100%;left:0;top:0;display:flex;justify-content:center;align-items:center;background-color:#0C4475;flex-direction:column;transition:opacity 0.5s 0.5s;}.loading{width:200px;height:8px;margin-top:0px;border-radius:5px;background-color:#fff;overflow:hidden;transition:0.5s;}.loading .bar{background-color:#E55A54;width:0%;height:100%;}</style>
   </head>
@@ -192,12 +194,20 @@ class GmOauth_Action extends Typecho_Widget implements Widget_Interface_Do
           <div class="eyeball"></div>
         </div>
         <div class="mouth"></div>
-      </div><h2>授权成功，正在加载…</h2>
+      </div><h2>页面加载中...</h2>
     </div>
     <script>  
         setTimeout(function(){
-            window.location.href="'.$this->cbref().'";
+            top.location = "'.$this->cbref().'";
         }, 1000);
+        setTimeout(function(){
+            if(window.opener.location.href){
+                window.opener.location.reload(true);self.close();
+            }else{
+                window.location.replace="'.$this->cbref().'";
+            }
+        }, 500);
+        setTimeout(function(){window.opener=null;window.close();}, 50000);
     </script> 
   </body>
 </html>';

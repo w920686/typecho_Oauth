@@ -1,12 +1,8 @@
 # typecho_Oauth
 typecho免申请第三方应用集成多种第三方登录插件
 
-![演示图](https://www.gmit.vip/usr/uploads/2020/12/783730042.png)
-
 # 演示站
-https://muyu.mobi/
-
-https://www.gmit.vip/
+https://blog.gmit.vip/
 
 
 # 使用方法
@@ -67,11 +63,15 @@ https://www.gmit.vip/
 11. 小米
 12. 开源中国
 13. 领英
-14. 微信扫码
+14. 微信
 
 会陆续新增其他站点的支持
 
 # 版本
+v2.2
+1. 修复无法登陆问题
+2. 优化登陆速度
+
 v2.1.3
 1. 新增微信登录
 

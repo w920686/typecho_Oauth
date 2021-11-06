@@ -6,8 +6,8 @@ include 'config.php';
  * 
  * @package GmOauth
  * @author Gm
- * @version 2.1.3
- * @update: 2021-3-17
+ * @version 2.2
+ * @update: 2021-11-6
  * @link //www.gmit.vip
  */
 class GmOauth_Plugin implements Typecho_Plugin_Interface
@@ -115,9 +115,21 @@ class GmOauth_Plugin implements Typecho_Plugin_Interface
         for ($i = 0; $i < count($site); $i++) {
             $c = $site[$i]['site'];
             if($plugin->$c){
-                $html .= '<a href="'.Typecho_Common::url('GmOauth', Helper::options()->index).'?site='.$c.'" class="btn btn-rounded btn-sm btn-icon btn-default" data-toggle="tooltip" data-placement="bottom" data-original-title="'.$site[$i]['name'].'账号登陆">'.$site[$i]['ico'].'</a>';
+                $html .= '<a no-pjax onclick="OpenUrl(\''.Typecho_Common::url('GmOauth', Helper::options()->index).'?site='.$c.'\',800,550)" class="btn btn-rounded btn-sm btn-icon btn-default" data-toggle="tooltip" data-placement="bottom" data-original-title="'.$site[$i]['name'].'账号登陆">'.$site[$i]['ico'].'</a>';
             }
         }
-        echo '<div class="row text-center" style="margin-top:-5px;">'.$html.'</div>';
+        print <<<HTML
+<script>
+let OpenUrl = function(url,iWidth,iHeight){
+    let iTop = (window.screen.availHeight - 30 - iHeight) / 2;
+    let iLeft = (window.screen.availWidth - 10 - iWidth) / 2;
+    let open = window.open(url, '_blank', 'height=' + iHeight + ',innerHeight=' + iHeight + ',width=' + iWidth + ',innerWidth=' + iWidth + ',top=' + iTop + ',left=' + iLeft + ',status=no,toolbar=no,menubar=no,location=no,resizable=no,scrollbars=0,titlebar=no');
+    if(!open){
+        window.location.href = url;
+    }
+}
+</script>
+HTML;
+        print '<div class="row text-center" style="margin-top:-5px;">'.$html.'</div>';
     }
 }

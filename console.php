@@ -37,7 +37,7 @@ include 'config.php';
     if($_GET['add']){
         $a = $_GET['add'];
         if($plugin->$a){
-            exit(header('location:https://auth.gmit.vip/'.$_GET['add'].'?redirectUrl='.Typecho_Common::url('GmOauth/Bind', Helper::options()->index)));
+            exit(header('location:https://sso.gmit.vip/'.$_GET['add'].'/redirect?redirect_url='.Typecho_Common::url('GmOauth/Bind', Helper::options()->index)));
         }else{
             throw new Typecho_Exception(_t('未开通此第三方登陆'));
         }
