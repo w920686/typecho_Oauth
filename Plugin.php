@@ -1,13 +1,13 @@
 <?php
 if (!defined('__TYPECHO_ROOT_DIR__')) exit;
-include 'config.php';
+define('__PLUGIN_ROOT__', __DIR__);
 /**
  * <strong style="color:#000000;">故梦第三方登陆用户版</strong>
  * 
  * @package GmOauth
  * @author Gm
- * @version 2.2
- * @update: 2021-11-6
+ * @version 2.2.1
+ * @update: 2021-11-7
  * @link //www.gmit.vip
  */
 class GmOauth_Plugin implements Typecho_Plugin_Interface
@@ -74,7 +74,10 @@ class GmOauth_Plugin implements Typecho_Plugin_Interface
      */
     public static function config(Typecho_Widget_Helper_Form $form)
     {
-        $site = conf::site();
+        $iconfile = __PLUGIN_ROOT__."/icon.json";
+        $icon = @fopen($iconfile, "r") or die("登陆按钮图标文件丢失!");
+        $site = json_decode(fread($icon,filesize($iconfile)),true);
+        fclose($icon);
         for ($i = 0; $i < count($site); $i++) {
             $radio = new Typecho_Widget_Helper_Form_Element_Radio($site[$i]['site'], array('1' => _t('开启'), '0' => _t('关闭')), '1', _t($site[$i]['name']));
             $form->addInput($radio);
@@ -109,16 +112,24 @@ class GmOauth_Plugin implements Typecho_Plugin_Interface
     
     public static function GmOauth()
     {
-        $site = conf::site();
+        $iconfile = __PLUGIN_ROOT__."/icon.json";
+        $icon = @fopen($iconfile, "r") or die("登陆按钮图标文件丢失!");
+        $site = json_decode(fread($icon,filesize($iconfile)),true);
+        fclose($icon);
         $plugin = Typecho_Widget::widget('Widget_Options')->plugin('GmOauth');
         $html = '';
         for ($i = 0; $i < count($site); $i++) {
             $c = $site[$i]['site'];
             if($plugin->$c){
-                $html .= '<a no-pjax onclick="OpenUrl(\''.Typecho_Common::url('GmOauth', Helper::options()->index).'?site='.$c.'\',800,550)" class="btn btn-rounded btn-sm btn-icon btn-default" data-toggle="tooltip" data-placement="bottom" data-original-title="'.$site[$i]['name'].'账号登陆">'.$site[$i]['ico'].'</a>';
+                $html .= '<a no-pjax onclick="OpenUrl(\''.Typecho_Common::url('GmOauth', Helper::options()->index).'?site='.$c.'\',\''.$site[$i]['width'].'\',\''.$site[$i]['height'].'\')" class="btn btn-rounded btn-sm btn-icon btn-default" data-toggle="tooltip" data-placement="bottom" data-original-title="'.$site[$i]['name'].'账号登陆">'.$site[$i]['ico'].'</a>';
             }
         }
         print <<<HTML
+<style>
+.icon{
+   margin-top: 2px; 
+}
+</style>
 <script>
 let OpenUrl = function(url,iWidth,iHeight){
     let iTop = (window.screen.availHeight - 30 - iHeight) / 2;

@@ -1,8 +1,8 @@
 <?php
+define('__PLUGIN_ROOT__', __DIR__);
 include_once 'common.php';
 include 'header.php';
 include 'menu.php';
-include 'config.php';
 ?>
 <style>
     svg{
@@ -13,7 +13,10 @@ include 'config.php';
 <?php
     $db = Typecho_Db::get();
     Typecho_Widget::widget('Widget_User')->to($user);
-    $site = conf::site();
+    $iconfile = __PLUGIN_ROOT__."/icon.json";
+    $icon = @fopen($iconfile, "r") or die("登陆按钮图标文件丢失!");
+    $site = json_decode(fread($icon,filesize($iconfile)),true);
+    fclose($icon);
     $plugin = Typecho_Widget::widget('Widget_Options')->plugin('GmOauth');
     $arr = [];
     for ($i = 0; $i < count($site); $i++) {
